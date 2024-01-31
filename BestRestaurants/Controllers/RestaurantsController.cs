@@ -67,4 +67,20 @@ public class RestaurantsController : Controller
     _db.SaveChanges();
     return RedirectToAction("Index");
   }
+
+  public ActionResult Delete(int id)
+  {
+    Restaurant thisRestaurant = _db.Restaurant.FirstOrDefault(restaurant => restaurant.RestaurantId == id);
+    ViewBag.PageTitle = $"Confirm Delete - {thisRestaurant.RestaurantName}";
+    return View(thisRestaurant);
+  }
+
+  [HttpPost, ActionName("Delete")]
+  public ActionResult DeleteConfirmed(int id)
+  {
+    Restaurant thisRestaurant = _db.Restaurant.FirstOrDefault(restaurant => restaurant.RestaurantId == id);
+    _db.Restaurant.Remove(thisRestaurant);
+    _db.SaveChanges();
+    return RedirectToAction("Index");
+  }
 }
