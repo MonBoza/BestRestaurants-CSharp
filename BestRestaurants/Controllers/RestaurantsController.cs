@@ -55,6 +55,16 @@ public class RestaurantsController : Controller
   }
   public ActionResult Edit(int id)
   {
-    RestaurantsController thisRestaurant = _db.Restaurant.FirstOrDefault(shop => shop.RestaurantId == id);
+    Restaurant thisRestaurant = _db.Restaurant.FirstOrDefault(shop => shop.RestaurantId == id);
+    ViewBag.CuisineId = new SelectList(_db.Cuisine, "CuisineId", "Type");
+    return View(thisRestaurant);
+  }
+
+  [HttpPost]
+  public ActionResult Edit(Restaurant restaurant)  
+  {
+    _db.Restaurant.Update(restaurant);
+    _db.SaveChanges();
+    return RedirectToAction("Index");
   }
 }
