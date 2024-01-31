@@ -1,5 +1,6 @@
 <div id="headerDiv">
-  <h2>Best Restaurants In Town!</h2>
+  @* <h2>🌮 Best Restaurants In Town! 🍔</h2> *@
+  <h2> @Html.ActionLink("🌮 Best Restaurants In Town! 🍔", "Index", "Home") </h2>
 
   @using (Html.BeginForm("Index", "Restaurants", FormMethod.Get))
   {
