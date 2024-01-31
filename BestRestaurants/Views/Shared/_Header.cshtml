@@ -1,0 +1,9 @@
+<div id="headerDiv">
+  <h2>Best Restaurants In Town!</h2>
+
+  @using (Html.BeginForm("Index", "Restaurants", FormMethod.Get))
+  {
+    <input type="text" name="searchQuery" />
+    <input type="submit" value="Search for Restaurant" />
+  }
+</div>

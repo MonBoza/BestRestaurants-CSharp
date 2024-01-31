@@ -13,10 +13,10 @@
   @Html.HiddenFor(model => model.RestaurantId)
 
   @Html.LabelFor(model => model.RestaurantName)
-  @Html.EditorFor(model => model.RestaurantName)
+  @Html.EditorFor(model => model.RestaurantName, new {@required = "required"})
 
   @Html.LabelFor(model => model.Description)
-  @Html.EditorFor(model => model.Description)
+  @Html.EditorFor(model => model.Description, new {@required = "required"})
 
   @Html.LabelFor(model => model.Cuisine)
   @Html.DropDownList("CuisineId")

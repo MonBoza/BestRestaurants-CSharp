@@ -1,12 +1,11 @@
-using BestRestaurants.Models;
-using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System;
+using Microsoft.AspNetCore.Mvc;
+using BestRestaurants.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-
 
 
 namespace BestRestaurants.Controllers;
@@ -20,12 +19,35 @@ public class RestaurantsController : Controller
     _db = db;
   }
 
-  public ActionResult Index()
+  private async Task<List<Restaurant>> SearchMethod(string searchQuery)
   {
-    List<Restaurant> model = _db.Restaurant.ToList();
-    ViewBag.PageTitle = "View All Restaurants";
-    return View(model);
+    IQueryable<Restaurant> restaurantsList = _db.Set<Restaurant>();
+
+    if (searchQuery != null)
+    {
+      return await restaurantsList?.Where(restaurant => restaurant.RestaurantName.Contains(searchQuery) || restaurant.Description.Contains(searchQuery) || restaurant.Cuisine.Type.Contains(searchQuery) ).ToListAsync();
+    }
+    else
+    {
+      return await restaurantsList.ToListAsync();
+    }
   }
+
+  // public ActionResult Index()
+  // {
+  //   List<Restaurant> model = _db.Restaurant.ToList();
+  //   ViewBag.PageTitle = "View All Restaurants";
+  //   return View(model);
+  // }
+
+  public async Task<IActionResult> Index(string searchQuery)
+  {
+    List<Restaurant> resultList = await SearchMethod(searchQuery);
+    ViewBag.PageTitle = "View Restaurants";
+    return View(resultList);
+  }
+
+
   public ActionResult Create()
   {
     ViewBag.CuisineId = new SelectList(_db.Cuisine, "CuisineId", "Type");
@@ -62,6 +84,7 @@ public class RestaurantsController : Controller
 
   [HttpPost]
   public ActionResult Edit(Restaurant restaurant)  
+  
   {
     _db.Restaurant.Update(restaurant);
     _db.SaveChanges();

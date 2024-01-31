@@ -8,7 +8,7 @@
 @using (Html.BeginForm())
 {
   @Html.LabelFor(model => model.Type)
-  @Html.TextBoxFor(model => model.Type)
+  @Html.TextBoxFor(model => model.Type, new {@required = "required"})
   <br />
   <input type="submit" value="Add Cuisine" />
 }

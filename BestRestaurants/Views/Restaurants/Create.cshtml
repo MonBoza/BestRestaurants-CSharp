@@ -9,10 +9,10 @@
 @using (Html.BeginForm())
 {
   @Html.LabelFor(model => model.RestaurantName)
-  @Html.TextBoxFor(model => model.RestaurantName)
+  @Html.TextBoxFor(model => model.RestaurantName, new {@required = "required"})
   <br /><br />
   @Html.LabelFor(model => model.Description)
-  @Html.TextAreaFor(model => model.Description)
+  @Html.TextAreaFor(model => model.Description, new {@required = "required"})
   <br /><br />
   @Html.LabelFor(model => model.Cuisine)
   @Html.DropDownList("CuisineId")
