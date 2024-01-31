@@ -45,4 +45,16 @@ public class RestaurantsController : Controller
     return RedirectToAction("Index");
   }
 
+  public ActionResult Details(int id)
+  {
+    Restaurant selectedRestaurant = _db.Restaurant
+                                        .Include(shop => shop.Cuisine)
+                                        .FirstOrDefault(shop => shop.RestaurantId == id);
+    ViewBag.PageTitle = $"Details - {selectedRestaurant.RestaurantName}";
+    return View(selectedRestaurant);
+  }
+  public ActionResult Edit(int id)
+  {
+    RestaurantsController thisRestaurant = _db.Restaurant.FirstOrDefault(shop => shop.RestaurantId == id);
+  }
 }
